@@ -15,7 +15,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
         # The page title and header have 'to-do' in it.
         self.assertIn('To-Do', self.browser.title)
-        self.fail('Finish the test!')
+        self.fail('Finished the test!')
         #I am interested in entering a todo item right away.
 
         #I type "Whatever I want" into a text box.
