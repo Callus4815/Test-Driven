@@ -15,15 +15,21 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
         # The page title and header have 'to-do' in it.
         self.assertIn('To-Do', self.browser.title)
-        self.fail('Finished the test!')
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('To-Do', header_text)
         #I am interested in entering a todo item right away.
-
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.asssertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
         #I type "Whatever I want" into a text box.
-
+        inputbox.send_keys("Whatever I want")
         #When I hit enter, the page updates, and now the page lists my todo item.
+        inputbox.send_keys(Keys.ENTER)
 
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_element_by_tag_name('tr')
+        self.assertTrue(any(row.text == '1: Whatever I want' for row in rows))
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
-
+        self.fail('Pick up here!')
         #The page now updates again, and shows both items in my list.
 
         #Now Im wondering if the site will remember my list. But then I notice a unique URL, just for me.
