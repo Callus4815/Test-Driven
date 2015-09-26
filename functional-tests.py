@@ -20,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', header_text)
         #I am interested in entering a todo item right away.
         inputbox = self.browser.find_element_by_id('id_new_item')
-        self.asssertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
         #I type "Whatever I want" into a text box.
         inputbox.send_keys("Whatever I want")
         #When I hit enter, the page updates, and now the page lists my todo item.
@@ -28,7 +28,7 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(row.text == '1: Whatever I want' for row in rows))
+        self.assertTrue(any(row.text == '1: Whatever I want' for row in rows), "New to-do item did not appear in table")
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
         self.fail('Pick up here!')
         #The page now updates again, and shows both items in my list.
