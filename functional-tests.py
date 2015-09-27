@@ -25,16 +25,16 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys("Whatever I want")
         #When I hit enter, the page updates, and now the page lists my todo item.
         inputbox.send_keys(Keys.ENTER)
-
+        # import time
+        # time.sleep(10)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(row.text == '1: Whatever I want' for row in rows), "New to-do item did not appear in table")
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
-        self.fail('Pick up here!')
+        self.assertIn('1: Whatever I want', [row.text for row in rows]) 
         #The page now updates again, and shows both items in my list.
-
+        self.assertIn('2: Wash my Car', [row.text for row in rows])
         #Now Im wondering if the site will remember my list. But then I notice a unique URL, just for me.
-
+        self.fail('Pick up here!')
         #I go ahead and visit that URL, and low and behold, my list is still alive!
 
         #Happy that Ive got my list in order, I go grab a beer.
