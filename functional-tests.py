@@ -11,6 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+    
     def test_can_start_a_list_and_retrieve_it_later(self):
         # I am going to check out a new to-do list app on the internet. I am going to the homepage now.
         self.browser.get('http://localhost:8000')
@@ -27,12 +32,10 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         # import time
         # time.sleep(10)
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
-        self.assertIn('1: Whatever I want', [row.text for row in rows]) 
         #The page now updates again, and shows both items in my list.
-        self.assertIn('2: Wash my Car', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Whatever I want')
+        self.check_for_row_in_list_table('2: Wash my Car')
         #Now Im wondering if the site will remember my list. But then I notice a unique URL, just for me.
         self.fail('Pick up here!')
         #I go ahead and visit that URL, and low and behold, my list is still alive!
