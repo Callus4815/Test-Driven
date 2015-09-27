@@ -30,9 +30,12 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys("Whatever I want")
         #When I hit enter, the page updates, and now the page lists my todo item.
         inputbox.send_keys(Keys.ENTER)
-        # import time
-        # time.sleep(10)
+        import time
+        time.sleep(10)
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys("Wash my Car")
+        inputbox.send_keys(Keys.ENTER)
         #The page now updates again, and shows both items in my list.
         self.check_for_row_in_list_table('1: Whatever I want')
         self.check_for_row_in_list_table('2: Wash my Car')
