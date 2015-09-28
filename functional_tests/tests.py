@@ -68,7 +68,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         #Alison gets her own uniique URL.
         alison_list_url = self.browser.current_url
-        self.asserRegex(alison_list_url, '/lists/.+')
+        self.assertRegex(alison_list_url, '/lists/.+')
         self.assertNotEqual(alison_list_url, keith_list_url)
 
         # Again there is now trace of My list.
