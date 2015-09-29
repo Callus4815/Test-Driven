@@ -40,7 +40,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertRegex(keith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Whatever I want')
         # import time
-        # time.sleep(10)
+        # time.sleep(5)
         
         #I can still add another item, since there is still a text box inviting me to do so. So i enter "Wash my Car".
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -76,7 +76,20 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('Whatever I want', page_text)
         self.assertIn('Buy milk', page_text)
 
+    def test_layout_and_styling(self):
+        #I go to the homepage
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+        import time
+        time.sleep(5)
+        #She notices the input box is nicely centered
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=5)
 
+        #I start a new list and see the input is nicely centered as well.
+        inputbox.send_keys('testing\n')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=5)
 
         #Now Im wondering if the site will remember my list. But then I notice a unique URL, just for me.
         self.fail('Pick up here!')
